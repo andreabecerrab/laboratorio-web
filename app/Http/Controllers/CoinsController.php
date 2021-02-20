@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Coin;
+use App\Coin;
 
 class CoinsController extends Controller
 {
@@ -14,7 +14,9 @@ class CoinsController extends Controller
      */
     public function index()
     {
-        //
+        $coins = Coin::all();
+
+        return view('coins.index', ['coins' => $coins]);
     }
 
     /**
@@ -40,7 +42,7 @@ class CoinsController extends Controller
         $coin -> short_name = $arr['sname'];
         $coin -> name = $arr['fname'];
         $coin -> save();
-        return 'Saved coin';
+        return redirect()->route('coins.index');
 
     }
 
@@ -61,22 +63,26 @@ class CoinsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Coin $coin)
     {
-        //
+        return view('coins.edit', ['coin' => $coin]);
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
-    {
-        //
+
+    public function update(Request $request, Coin $coin){
+        $arr = $request->input();
+        $coin->short_name = $arr['short_name'];
+        $coin->name = $arr['name'];
+        $coin->save();
+        return redirect()->route('coins.index');
     }
+
 
     /**
      * Remove the specified resource from storage.
@@ -84,8 +90,10 @@ class CoinsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Coin $coin)
     {
-        //
+        $coin->delete();
+        return redirect()->route('coins.index');
     }
+
 }
