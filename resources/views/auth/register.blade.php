@@ -3,6 +3,8 @@
 @section('content')
 <h1>Registro usuario</h1>
 
+<a href="{{ route('auth.login') }}">Login</a>
+
 <form action="{{ route('auth.do-register') }}" method="POST">
 @csrf
     <label for="">Name:</label><br>

@@ -20,15 +20,21 @@ class ValidateRole
 
         if (!Auth::check()) {
             return redirect()->route('auth.register');
-        } else{
+        } else {
             if($request->path() == '/' && Auth::check()){
                 return $next($request);
-            } else if ($request->path() == 'app/dashboard' && Auth::check() && $user->role_id != 1 ){
+                //app dashboard
+            } else if ($request->path() == 'app/dashboard'  && $user-> role_id != 1 ){
                 return $next($request);
-            } else if ($request->path() == 'app/users' && Auth::check() && $user->role_id != 1 && $user->role_id != 2){
+            //app/users
+            } else if ($request->path() == 'app/users'){
+                if( $user->role_id != 1 && $user->role_id != 2){
+                    return $next($request);
+                }else {
+                    return abort(403);
+                }
+            } else if ($user-> role_id != 1){
                 return $next($request);
-            } else {
-                return abort(403);
             }
         }
 
