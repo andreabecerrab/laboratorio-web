@@ -7,6 +7,13 @@
         <title>Mi sitio web</title>
     </head>
     <body>
+        <p>
+            @auth
+            Hi ! {{ auth()->user()-> name }}
+            <a href="{{ route('auth.logout') }}">Logout</a>
+            @endauth
+        </p>
         @yield('content')
+
     </body>
 </html>
