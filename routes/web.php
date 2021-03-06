@@ -29,7 +29,7 @@ Route::get('/clase', function () {
 Route::get('/controller', 'MyController@index');
 
 //creates all
-// Route::resource('coins', 'CoinsController');
+Route::resource('coins', 'CoinsController');
 Route::resource('app/users', 'UserController')->middleware('validate_role');
 
 
