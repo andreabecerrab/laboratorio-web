@@ -23,8 +23,8 @@ class ValidateRole
         } else {
             if($request->path() == '/' && Auth::check()){
                 return $next($request);
-                //app dashboard
-            } else if ($request->path() == 'app/dashboard'  && $user-> role_id != 1 ){
+            //app dashboard
+            } else if ($request->path() == 'app/dashboard' && $user-> role_id !== 1 ){
                 return $next($request);
             //app/users
             } else if ($request->path() == 'app/users'){
@@ -33,8 +33,10 @@ class ValidateRole
                 }else {
                     return abort(403);
                 }
-            } else if ($user-> role_id != 1){
+            } else if ($user-> role_id !== 1){
                 return $next($request);
+            } else {
+                return abort(403);
             }
         }
 
