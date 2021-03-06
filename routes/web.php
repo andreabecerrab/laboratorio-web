@@ -15,7 +15,12 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('welcome');
-});
+})->middleware('validate_role')->name('welcome');
+
+Route::get('/app/dashboard', function () {
+    return view('app.dashboard');
+})->middleware('validate_role');
+
 
 Route::get('/clase', function () {
     return view('mi-clase');
@@ -24,4 +29,12 @@ Route::get('/clase', function () {
 Route::get('/controller', 'MyController@index');
 
 //creates all
-Route::resource('coins', 'CoinsController');
+// Route::resource('coins', 'CoinsController');
+Route::resource('app/users', 'UserController')->middleware('validate_role');
+
+
+Route::get('register', 'AuthController@register')->name('auth.register');
+Route::post('register', 'AuthController@doRegister')->name('auth.do-register');
+Route::get('login', 'AuthController@login')->name('auth.login');
+Route::post('login', 'AuthController@doLogin')->name('auth.do-login');
+Route::any('logout', 'AuthController@logout')->name('auth.logout');

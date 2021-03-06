@@ -3,11 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Coin;
-use App\Jobs\CoinCalculator;
+use App\User;
 
-
-class CoinsController extends Controller
+class UserController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,9 +14,8 @@ class CoinsController extends Controller
      */
     public function index()
     {
-        $coins = Coin::all();
-
-        return view('coins.index', ['coins' => $coins]);
+        $users = User::all();
+        return view('app.users', ['users' => $users]);
     }
 
     /**
@@ -28,7 +25,7 @@ class CoinsController extends Controller
      */
     public function create()
     {
-        return view('coins.create');
+        //
     }
 
     /**
@@ -39,14 +36,7 @@ class CoinsController extends Controller
      */
     public function store(Request $request)
     {
-        $arr = $request->input();
-        $coin = new Coin();
-        $coin -> short_name = $arr['sname'];
-        $coin -> name = $arr['fname'];
-        $coin -> save();
-        CoinCalculator::dispatch();
-        return redirect()->route('coins.index');
-
+        //
     }
 
     /**
@@ -57,6 +47,7 @@ class CoinsController extends Controller
      */
     public function show($id)
     {
+
         //
     }
 
@@ -66,26 +57,22 @@ class CoinsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Coin $coin)
+    public function edit($id)
     {
-        return view('coins.edit', ['coin' => $coin]);
+        //
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-
-    public function update(Request $request, Coin $coin){
-        $arr = $request->input();
-        $coin->short_name = $arr['short_name'];
-        $coin->name = $arr['name'];
-        $coin->save();
-        return redirect()->route('coins.index');
+    public function update(Request $request, $id)
+    {
+        //
     }
-
 
     /**
      * Remove the specified resource from storage.
@@ -93,10 +80,8 @@ class CoinsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Coin $coin)
+    public function destroy($id)
     {
-        $coin->delete();
-        return redirect()->route('coins.index');
+        //
     }
-
 }
